@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: user-churn
-        image: gcr.io/ornate-genre-425416-q8/user-churn:v1
+        image: gcr.io/ornate-genre-425416-q8/user-churn:v3
         ports:
-        - containerPort: 5007
+        - containerPort: 5009
