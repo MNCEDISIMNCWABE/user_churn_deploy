@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ml-model
+  name: user-churn-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ml-model
+      app: user-churn
   template:
     metadata:
       labels:
-        app: ml-model
+        app: user-churn
     spec:
       containers:
-      - name: ml-model
-        image: gcr.io/ornate-genre-425416-q8/user-churn-model:v1
+      - name: user-churn
+        image: gcr.io/ornate-genre-425416-q8/user-churn:v1
         ports:
         - containerPort: 5007
