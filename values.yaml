@@ -1,6 +1,7 @@
 datadog:
   apiKeyExistingSecret: datadog-secret
   site: "datadoghq.com"
+  clusterName: "stroke-cluster"
   logs:
     enabled: true
   apm:
@@ -9,6 +10,18 @@ datadog:
     enabled: true
   networkMonitoring:
     enabled: true
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 6
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 6
 
 clusterAgent:
   enabled: true
