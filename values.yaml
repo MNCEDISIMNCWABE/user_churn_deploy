@@ -10,18 +10,6 @@ datadog:
     enabled: true
   networkMonitoring:
     enabled: true
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 15
-    timeoutSeconds: 5
-    successThreshold: 1
-    failureThreshold: 6
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 15
-    timeoutSeconds: 5
-    successThreshold: 1
-    failureThreshold: 6
 
 clusterAgent:
   enabled: true
