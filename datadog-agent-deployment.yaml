@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datadog-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datadog-agent
+  template:
+    metadata:
+      labels:
+        app: datadog-agent
+    spec:
+      containers:
+      - name: datadog-agent
+        image: datadog/agent:latest
+        env:
+          - name: DD_API_KEY
+            value: "<DATADOG_API_KEY>"
+          - name: DD_LOGS_ENABLED
+            value: "true"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/datadog-agent/conf.d/python.d
+            subPath: python.d
+      volumes:
+      - name: config-volume
+        configMap:
+          name: datadog-agent-config
