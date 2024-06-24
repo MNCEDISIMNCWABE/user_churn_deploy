@@ -25,5 +25,5 @@ RUN mkdir -p /var/log && chmod -R 777 /var/log
 # Expose the port the app runs on
 EXPOSE 5009
 
-# Command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5009", "app:app"]
+# Command to run the application with ddtrace
+CMD ["ddtrace-run", "gunicorn", "--bind", "0.0.0.0:5009", "app:app"]
