@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 import logging
 import json_log_formatter
-from ddtrace import patch_all
+from ddtrace import patch_all, tracer
 
+# Apply automatic patching for supported libraries
 patch_all()
 
 app = Flask(__name__)
@@ -24,6 +25,7 @@ logger.addHandler(json_handler)
 logger.setLevel(logging.INFO)
 
 @app.route('/')
+@tracer.wrap()
 def hello_world():
     """
     Example endpoint returning a simple greeting
@@ -38,6 +40,7 @@ def hello_world():
     return 'Hello, World!'
 
 @app.route('/predict', methods=['POST'])
+@tracer.wrap()
 def predict():
     """
     Predict if a user will churn based on their features
