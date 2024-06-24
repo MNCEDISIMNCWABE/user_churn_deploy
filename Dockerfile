@@ -19,6 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . /app/
 
+# Create log directory and set permissions
+RUN mkdir -p /var/log && chmod -R 777 /var/log
+
 # Expose the port the app runs on
 EXPOSE 5009
 
