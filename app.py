@@ -3,12 +3,25 @@ from flasgger import Swagger
 import joblib
 import numpy as np
 import pandas as pd
+import logging
+import json_log_formatter
+from ddtrace import patch_all
+
+patch_all()
 
 app = Flask(__name__)
 swagger = Swagger(app)
 
 # Load the trained model
 model = joblib.load('model_churn.pkl')
+
+# Configure JSON logging
+formatter = json_log_formatter.JSONFormatter()
+json_handler = logging.FileHandler(filename='/var/log/my-log.json')
+json_handler.setFormatter(formatter)
+logger = logging.getLogger('my_json')
+logger.addHandler(json_handler)
+logger.setLevel(logging.INFO)
 
 @app.route('/')
 def hello_world():
@@ -21,6 +34,7 @@ def hello_world():
         examples:
           text: Hello, World!
     """
+    logger.info("Hello World endpoint was called")
     return 'Hello, World!'
 
 @app.route('/predict', methods=['POST'])
@@ -82,10 +96,13 @@ def predict():
         }])
         prediction = model.predict(features)
         prediction_label = "Churn" if int(prediction[0]) == 1 else "No Churn"
+        logger.info(f"Prediction made: {prediction_label}")
         return jsonify({'prediction': prediction_label})
     except KeyError as e:
+        logger.error(f"Missing parameter: {str(e)}")
         return jsonify({'error': f"Missing parameter: {str(e)}"}), 400
     except Exception as e:
+        logger.error(f"Error: {str(e)}")
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
