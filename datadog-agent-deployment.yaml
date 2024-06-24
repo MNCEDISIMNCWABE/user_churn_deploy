@@ -17,7 +17,7 @@ spec:
         image: datadog/agent:latest
         env:
           - name: DD_API_KEY
-            value: "<DATADOG_API_KEY>"
+            value: "55af30eb3c51d9413eb0fa51ca4920b4859efa2d"
           - name: DD_LOGS_ENABLED
             value: "true"
         volumeMounts:
