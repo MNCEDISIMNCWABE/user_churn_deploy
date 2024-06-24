@@ -6,3 +6,5 @@ numpy==1.23.3
 pandas==1.5.0
 scikit-learn==1.5.0
 flasgger==0.9.5
+ddtrace
+json_log_formatter
